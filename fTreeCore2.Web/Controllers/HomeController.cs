@@ -6,7 +6,7 @@ namespace fTreeCore2.Web.Controllers
     {
         public IActionResult Index()
         {
-            return Content("Heeeeeeey buddy");
+            return View();
         }
     }
 }
