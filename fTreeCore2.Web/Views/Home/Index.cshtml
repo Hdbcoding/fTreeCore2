@@ -2,4 +2,19 @@
     ViewData["Title"] = "Home";
 }
 
-<h2>heeeey friendo</h2>
+<h1>Canvas testing</h1>
+
+@section scripts{
+<environment names="Development">
+    <script src="~/js/canvas.js"></script>
+</environment>
+
+@*Todo - get bundling up and going*@
+
+<script>
+    $(function(){
+        var api = window.canvasApi.init({container: 'body'});
+        api.callout();
+    });
+</script>
+}
