@@ -1,0 +1,17 @@
+[
+    {
+        "outputFileName": "wwwroot/css/site.min.css",
+        "inputFiles":[
+            "wwwroot/css/site.css"
+        ]
+    },
+    {
+        "outputFileName": "wwwroot/js/familyTree.min.js",
+        "inputFiles": [
+            "wwwroot/js/canvas.js"
+        ],
+        "minify": {
+            "enabled": false
+        }
+    }
+]
