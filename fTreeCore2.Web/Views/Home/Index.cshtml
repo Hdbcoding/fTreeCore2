@@ -16,10 +16,10 @@
             height: 720, 
             width: 1366
         });
-        var square = window.visualElement.createElement({
-            drawCallback: window.visualElement.drawSquare
-        });
+        var square = window.visualElement.createRect();
         canvasInstance.addElement(square);
+        var rect = window.visualElement.createRect({x: 155, y: 200, width: 222, height: 100});
+        canvasInstance.addElement(rect);
         canvasInstance.render();
     });
 </script>

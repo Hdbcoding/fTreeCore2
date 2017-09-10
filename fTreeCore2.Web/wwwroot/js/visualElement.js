@@ -10,7 +10,7 @@
             fillStyle: 'white',
             strokeStyle: 'red',
         },
-        drawCallback: visualElement.drawSquare
+        drawCallback: visualElement.drawRect
     };
 
     var elementProto = {
@@ -24,7 +24,7 @@
         },
         draw: function (ctx) {
             if ($.isFunction(this._drawCallback)) this._drawCallback(ctx);
-            else visualElement.drawSquare.call(this, ctx);
+            else visualElement.drawRect.call(this, ctx);
         }
     };
 
@@ -35,15 +35,17 @@
         return instance;
     }
 
-    visualElement.drawSquare = function (ctx) {
-        ctx.save();
+    visualElement.createRect = function(inputSettings){
+        return visualElement.createElement($.extend(true, {}, inputSettings, { drawCallback: visualElement.drawRect }));
+    }
 
+    visualElement.drawRect = function (ctx) {
+        ctx.beginPath();
         ctx.rect(this._x, this._y, this._width, this._height);
         ctx.fillStyle = this._drawOptions.fillStyle;
         ctx.fill();
         ctx.strokeStyle = this._drawOptions.strokeStyle;
         ctx.stroke();
-
-        ctx.restore();
+        ctx.closePath();
     }
 })(jQuery, window);
