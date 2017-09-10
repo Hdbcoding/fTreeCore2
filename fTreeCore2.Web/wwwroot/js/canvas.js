@@ -11,7 +11,7 @@
 
     //canvas API prototype
     // pwease no steppy on _private fields
-    var api = {
+    var canvasProto = {
         _init: function(container, width, height){
             this._container = container;
             this._width = width;
@@ -23,8 +23,21 @@
             this._ctx = this.ctx || this._$canvas[0].getContext('2d');
         },
         clear: function(){
+            this._ctx.save();
             this._ctx.fillstyle = 'black';
             this._ctx.fillRect(0, 0, this._width, this._height);
+            this._ctx.restore();
+        },
+        addElement: function(element){
+            if (!this._elements.includes(element)){
+                this._elements.push(element);
+            }
+        },
+        render: function(){
+            this.clear();
+            for (let i = 0; i < this._elements.length; i++){
+                this._elements[i].draw(this._ctx);
+            }
         }
     };
 
@@ -36,7 +49,7 @@
         if (old) return old;
 
         //create canvas using the ~~prototype~~
-        let instance = Object.create(api);
+        let instance = Object.create(canvasProto);
         instance._init(settings.container, settings.width, settings.height);
         instance.clear();
         return instance;

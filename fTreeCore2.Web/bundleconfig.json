@@ -8,7 +8,8 @@
     {
         "outputFileName": "wwwroot/js/familyTree.min.js",
         "inputFiles": [
-            "wwwroot/js/canvas.js"
+            "wwwroot/js/canvas.js",
+            "wwwroot/js/visualElement.js"
         ],
         "minify": {
             "enabled": false

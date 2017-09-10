@@ -11,7 +11,16 @@
 
 <script>
     $(function(){
-        var api = window.canvasApi.init({container: 'body', height: 720, width: 1366});
+        var canvasInstance = window.canvasApi.init({
+            container: 'body', 
+            height: 720, 
+            width: 1366
+        });
+        var square = window.visualElement.createElement({
+            drawCallback: window.visualElement.drawSquare
+        });
+        canvasInstance.addElement(square);
+        canvasInstance.render();
     });
 </script>
 }
