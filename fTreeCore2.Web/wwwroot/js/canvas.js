@@ -47,10 +47,13 @@
             this._offsetY += dy;
             this._ctx.transform(1, 0, 0, 1, dx, dy);
         },
+        panTo: function(x, y){
+          this._ctx.transform(1, 0, 0, 1, x - this._offsetX, y - this._offsetY);
+          this._offsetX = x;
+          this._offsetY = y;
+        },
         resetPan: function () {
-            this._ctx.transform(1, 0, 0, 1, -this._offsetX, -this._offsetY);
-            this._offsetX = 0;
-            this._offsetY = 0;
+            this.panTo(0, 0);
         }
     };
 

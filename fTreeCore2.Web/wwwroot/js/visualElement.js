@@ -10,7 +10,7 @@
             fillStyle: 'white',
             strokeStyle: 'red',
         },
-        drawCallback: visualElement.drawRect
+        drawCallback: drawRect
     };
 
     var elementProto = {
@@ -24,7 +24,15 @@
         },
         draw: function (ctx) {
             if ($.isFunction(this._drawCallback)) this._drawCallback(ctx);
-            else visualElement.drawRect.call(this, ctx);
+            else drawRect.call(this, ctx);
+        },
+        moveBy: function(dx, dy){
+            this._x += dx;
+            this._y += dy;
+        },
+        moveTo: function(x, y){
+            this._x = x;
+            this._y = y;
         }
     };
 
@@ -36,10 +44,10 @@
     }
 
     visualElement.createRect = function(inputSettings){
-        return visualElement.createElement($.extend(true, {}, inputSettings, { drawCallback: visualElement.drawRect }));
+        return visualElement.createElement($.extend(true, {}, inputSettings, { drawCallback: drawRect }));
     }
 
-    visualElement.drawRect = function (ctx) {
+    var drawRect = function (ctx) {
         ctx.beginPath();
         ctx.rect(this._x, this._y, this._width, this._height);
         ctx.fillStyle = this._drawOptions.fillStyle;
