@@ -22,6 +22,7 @@
             this._elements = this._elements || [];
             this._ctx = this.ctx || this._$canvas[0].getContext('2d');
             this._offsetX = this._offsetY = 0;
+            this._zoomFactor = 1;
         },
         clear: function () {
             this._ctx.fillStyle = 'black';
@@ -47,13 +48,24 @@
             this._offsetY += dy;
             this._ctx.transform(1, 0, 0, 1, dx, dy);
         },
-        panTo: function(x, y){
-          this._ctx.transform(1, 0, 0, 1, x - this._offsetX, y - this._offsetY);
-          this._offsetX = x;
-          this._offsetY = y;
+        panTo: function (x, y) {
+            this._offsetX = x;
+            this._offsetY = y;
+            this._ctx.setTransform(this._zoomFactor, 0, 0, this._zoomFactor, x, y);
         },
         resetPan: function () {
             this.panTo(0, 0);
+        },
+        zoomBy: function (df) {
+            this._zoomFactor *= df;
+            this._ctx.transform(1 * df, 0, 0, 1 * df, 0, 0);
+        },
+        zoomTo: function (factor) {
+            this._zoomFactor = factor;
+            this._ctx.setTransform(factor, 0, 0, factor, this._offsetX, this._offsetY);
+        },
+        resetZoom: function(){
+            this.zoomTo(1);
         }
     };
 
