@@ -75,6 +75,10 @@
         },
         resetZoom: function () {
             this.zoomTo(1);
+        },
+        reset: function(){
+            this.resetZoom();
+            this.resetPan();
         }
     };
 
