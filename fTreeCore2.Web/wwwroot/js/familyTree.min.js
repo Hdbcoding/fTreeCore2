@@ -29,9 +29,18 @@
             this._ctx.fillRect(-this._offsetX, -this._offsetY, this._width, this._height);
         },
         addElement: function (element) {
-            if (!this._elements.includes(element)) {
+            if (!this.containsElement(element)) {
                 this._elements.push(element);
             }
+        },
+        removeElement: function (element) {
+            var index = this._elements.indexOf(element);
+            if (index !== -1) {
+                this._elements.splice(index, 1);
+            }
+        },
+        containsElement: function(element){
+            return this._elements.includes(element);
         },
         render: function () {
             this.clear();
@@ -64,7 +73,7 @@
             this._zoomFactor = factor;
             this._ctx.setTransform(factor, 0, 0, factor, this._offsetX, this._offsetY);
         },
-        resetZoom: function(){
+        resetZoom: function () {
             this.zoomTo(1);
         }
     };
