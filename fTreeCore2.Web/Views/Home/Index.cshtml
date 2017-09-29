@@ -20,6 +20,8 @@
         canvasInstance.addElement(square);
         var rect = window.visualElement.createRect({x: 155, y: 200, width: 222, height: 100});
         canvasInstance.addElement(rect);
+        var line = window.visualElement.createLine({drawOptions: { x1: 50, y1: 50, x2: 155, y2: 200 }});
+        canvasInstance.addElement(line);
         canvasInstance.render();
     });
 </script>
