@@ -23,10 +23,6 @@
             this._ctx = this.ctx || this._$canvas[0].getContext('2d');
             this._offsetX = this._offsetY = 0;
             this._zoomFactor = 1;
-
-            this._$canvas.on('click', function(e){
-                console.log(e.offsetX, e.offsetY);
-            });
         },
         clear: function () {
             this._ctx.fillStyle = 'black';
@@ -36,6 +32,11 @@
             if (!this.containsElement(element)) {
                 this._elements.push(element);
             }
+        },
+        removeAllElements: function(){
+            //probably too dangerous to keep long term
+            this._elements = [];
+            this.render();
         },
         removeElement: function (element) {
             var index = this._elements.indexOf(element);
@@ -48,9 +49,10 @@
         },
         render: function () {
             this.clear();
-            for (let i = 0; i < this._elements.length; i++) {
-                this._elements[i].draw(this._ctx);
-            }
+            this._elements.forEach(ele => ele.draw(this._ctx));
+        },
+        getElementsAt: function(x, y){
+            return this._elements.filter(ele => ele.isInBounds(x, y));
         },
         //ctx transform:
         // a c e

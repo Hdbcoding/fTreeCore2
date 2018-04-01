@@ -3,34 +3,16 @@
 }
 
 <h1>Canvas testing</h1>
-
+<div id="canvas-container"></div>
+<button type="button" id="clear">Clear canvas</button>
+<button type="button" id="zoom-in">+</button>
+<button type="button" id="zoom-out">-</button>
+<button type="button" id="zoom-reset">Reset zoom</button>
 @section scripts{
 <script src="~/js/familyTree.min.js"></script>
-
-@*todo - get bundling up and going*@
-
 <script>
     $(function(){
-        var canvasInstance = window.canvasApi.init({
-            container: 'body', 
-            height: 720, 
-            width: 1366
-        });
-        
-        var node1 = window.visualElement.createNode(250, 200);
-        var node2 = window.visualElement.createNode(150, 300);
-        var node3 = window.visualElement.createNode(400, 223);
-        var edge1 = window.visualElement.createEdge(node1, node2);
-        var edge2 = window.visualElement.createEdge(node1, node3);
-        var edge3 = window.visualElement.createEdge(node2, node3);
-        canvasInstance.addElement(node1);
-        canvasInstance.addElement(node2);
-        canvasInstance.addElement(node3);
-        canvasInstance.addElement(edge1);
-        canvasInstance.addElement(edge2);
-        canvasInstance.addElement(edge3);
-
-        canvasInstance.render();
+        window.eventApi.init();
     });
 </script>
 }
