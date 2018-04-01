@@ -23,6 +23,10 @@
             this._ctx = this.ctx || this._$canvas[0].getContext('2d');
             this._offsetX = this._offsetY = 0;
             this._zoomFactor = 1;
+
+            this._$canvas.on('click', function(e){
+                console.log(e.offsetX, e.offsetY);
+            });
         },
         clear: function () {
             this._ctx.fillStyle = 'black';

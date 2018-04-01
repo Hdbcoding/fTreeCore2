@@ -16,12 +16,20 @@
             height: 720, 
             width: 1366
         });
-        var square = window.visualElement.createRect();
-        canvasInstance.addElement(square);
-        var rect = window.visualElement.createRect({x: 155, y: 200, width: 222, height: 100});
-        canvasInstance.addElement(rect);
-        var line = window.visualElement.createLine({drawOptions: { x1: 50, y1: 50, x2: 155, y2: 200 }});
-        canvasInstance.addElement(line);
+        
+        var node1 = window.visualElement.createNode(250, 200);
+        var node2 = window.visualElement.createNode(150, 300);
+        var node3 = window.visualElement.createNode(400, 223);
+        var edge1 = window.visualElement.createEdge(node1, node2);
+        var edge2 = window.visualElement.createEdge(node1, node3);
+        var edge3 = window.visualElement.createEdge(node2, node3);
+        canvasInstance.addElement(node1);
+        canvasInstance.addElement(node2);
+        canvasInstance.addElement(node3);
+        canvasInstance.addElement(edge1);
+        canvasInstance.addElement(edge2);
+        canvasInstance.addElement(edge3);
+
         canvasInstance.render();
     });
 </script>
