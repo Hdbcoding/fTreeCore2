@@ -1,3 +1,4 @@
 obj
 bin
 /fTreeCore2.Web/wwwroot/lib
+/node_modules
