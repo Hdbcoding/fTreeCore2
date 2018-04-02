@@ -58,7 +58,8 @@
 
                 var elementsHit = instance.getElementsAt(x, y);
                 if (!elementsHit.length) {
-                    var ele = window.visualElement.createNode(x, y);
+                    var coords = instance.getCoordinates(x,y);
+                    var ele = window.visualElement.createNode(coords.x, coords.y);
                     instance.addElement(ele);
                     instance.render();
                 }
@@ -88,7 +89,6 @@
             if (isActiveDrag) {
                 var dx = current.x - last.x;
                 var dy = current.y - last.y;
-                console.log('pan', dx, dy);
                 instance.panBy(dx, dy);
                 instance.render();
             }
