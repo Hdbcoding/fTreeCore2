@@ -56,9 +56,9 @@
                 var x = e.offsetX;
                 var y = e.offsetY;
 
-                var elementsHit = instance.getElementsAt(x, y);
+                var coords = instance.getCoordinates(x,y);
+                var elementsHit = instance.getElementsAt(coords.x, coords.y);
                 if (!elementsHit.length) {
-                    var coords = instance.getCoordinates(x,y);
                     var ele = window.visualElement.createNode(coords.x, coords.y);
                     instance.addElement(ele);
                     instance.render();

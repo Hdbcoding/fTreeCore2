@@ -25,16 +25,18 @@
             this._zoomFactor = 1;
         },
         clear: function () {
-            var x0 = -this._offsetX / this._zoomFactor;
-            var y0 = -this._offsetY / this._zoomFactor;
-            var w0 = this._width / this._zoomFactor;
-            var h0 = this._height / this._zoomFactor;
+            //top left corner
+            var tl = this.getCoordinates(0,0);
+            //bottom right corner
+            var br = this.getCoordinates(this._width, this._height);
+            var w0 = br.x - tl.x;
+            var h0 = br.y - tl.y;
 
             this._ctx.fillStyle = 'black';
-            this._ctx.fillRect(x0, y0, w0, h0);
+            this._ctx.fillRect(tl.x, tl.y, w0, h0);
 
             this._ctx.strokeStyle = getRndColor();
-            this._ctx.strokeRect(x0, y0, w0, h0);
+            this._ctx.strokeRect(tl.x, tl.y, w0, h0);
         },
         addElement: function (element) {
             if (!this.containsElement(element)) {
@@ -77,16 +79,14 @@
             );
         },
         panBy: function (dx, dy) {
-            this._offsetX += dx / this._zoomFactor;
-            this._offsetY += dy / this._zoomFactor;
+            this._offsetX += dx;
+            this._offsetY += dy;
             this._transform();
-            // this._ctx.transform(1, 0, 0, 1, dx / this._zoomFactor, dy / this._zoomFactor);
         },
         panTo: function (x, y) {
             this._offsetX = x;
             this._offsetY = y;
             this._transform();
-            // this._ctx.setTransform(this._zoomFactor, 0, 0, this._zoomFactor, x, y);
         },
         resetPan: function () {
             this.panTo(0, 0);
@@ -94,12 +94,10 @@
         zoomBy: function (df) {
             this._zoomFactor *= df;
             this._transform();
-            // this._ctx.transform(1 * df, 0, 0, 1 * df, 0, 0);
         },
         zoomTo: function (factor) {
             this._zoomFactor = factor;
             this._transform();
-            // this._ctx.setTransform(factor, 0, 0, factor, this._offsetX, this._offsetY);
         },
         resetZoom: function () {
             this.zoomTo(1);
