@@ -46,29 +46,11 @@
             instance.render();
         });
 
-        $(settings.panReset).on('click', function(){
+        $(settings.panReset).on('click', function () {
             instance.resetPan();
             instance.render();
         })
 
-        instance._$canvas.on('click', function (e) {
-            if (!justDragged) {
-                var x = e.offsetX;
-                var y = e.offsetY;
-
-                var coords = instance.getCoordinates(x,y);
-                var elementsHit = instance.getElementsAt(coords.x, coords.y);
-                if (!elementsHit.length) {
-                    var ele = window.visualElement.createNode(coords.x, coords.y);
-                    instance.addElement(ele);
-                    instance.render();
-                }
-                else {
-                    //todo - do something with hit elements
-                    console.log(elementsHit);
-                }
-            }
-        });
 
         var isActiveDrag = false;
         var justDragged = false;
@@ -76,19 +58,34 @@
         var last = { x: 0, y: 0 };
         var current = { x: 0, y: 0 };
         var end = { x: 0, y: 0 };
+        var elementsHit = [];
+        var topElementHit = false;
+        var coords = { x: 0, y: 0 };
+
         instance._$canvas.on('mousedown', function (e) {
             last = current = start = { x: e.offsetX, y: e.offsetY };
             isActiveDrag = true;
             justDragged = false;
+
+            coords = instance.getCoordinates(start.x, start.y);
+            elementsHit = instance.getElementsAt(coords.x, coords.y);
+            if (elementsHit.length) {
+                topElementHit = elementsHit[0];
+            }
         });
 
         instance._$canvas.on('mousemove', function (e) {
             last = current;
             current = { x: e.offsetX, y: e.offsetY };
             justDragged = true;
-            if (isActiveDrag) {
-                var dx = current.x - last.x;
-                var dy = current.y - last.y;
+            var dx = current.x - last.x;
+            var dy = current.y - last.y;
+            if (isActiveDrag && topElementHit) {
+                //just dragged a thing
+                topElementHit.moveBy(dx, dy);
+                instance.render();
+            } else if (isActiveDrag && !topElementHit) {
+                //just panned
                 instance.panBy(dx, dy);
                 instance.render();
             }
@@ -96,7 +93,22 @@
 
         instance._$canvas.on('mouseup', function (e) {
             var end = { x: e.offsetX, y: e.offsetY }
+
+            if (!justDragged) {
+                if (topElementHit) {
+                    //just clicked a thing
+                    console.log(elementsHit);
+                } else {
+                    //just clicked empty space
+                    var ele = window.visualElement.createNode(coords.x, coords.y);
+                    instance.addElement(ele);
+                    instance.render();
+                }
+            }
+
             isActiveDrag = false;
+            elementsHit = [];
+            topElementHit = false;
         });
     }
 })(jQuery, window);
