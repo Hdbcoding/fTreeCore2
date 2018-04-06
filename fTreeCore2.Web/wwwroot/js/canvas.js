@@ -107,9 +107,12 @@
             this.resetPan();
         },
         getCoordinates: function (x, y) {
+            return this.getScaled(x - this._offsetX, y - this._offsetY);
+        },
+        getScaled: function(x, y){
             return {
-                x: (x - this._offsetX) / this._zoomFactor,
-                y: (y - this._offsetY) / this._zoomFactor
+                x: x / this._zoomFactor,
+                y: y / this._zoomFactor
             }
         }
     };

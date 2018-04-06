@@ -49,7 +49,19 @@
         $(settings.panReset).on('click', function () {
             instance.resetPan();
             instance.render();
-        })
+        });
+
+        instance._$canvas.on('wheel', function(e){
+            var dz = e.originalEvent.deltaY
+            var zoom = dz ? dz < 0 ? 1.25 : 0.8 : 1;
+            instance.zoomBy(zoom);
+
+            var dx = e.offsetX / zoom;
+            var dy = e.offsetY / zoom;
+            instance.panBy(dx, dy);
+
+            instance.render();
+        });
 
 
         var isActiveDrag = false;
@@ -82,7 +94,8 @@
             var dy = current.y - last.y;
             if (isActiveDrag && topElementHit) {
                 //just dragged a thing
-                topElementHit.moveBy(dx, dy);
+                var transform = instance.getScaled(dx, dy);
+                topElementHit.moveBy(transform.x, transform.y);
                 instance.render();
             } else if (isActiveDrag && !topElementHit) {
                 //just panned
