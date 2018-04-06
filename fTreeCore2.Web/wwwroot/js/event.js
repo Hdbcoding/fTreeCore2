@@ -32,12 +32,12 @@
         });
 
         $(settings.zoomIn).on('click', function () {
-            instance.zoomBy(1.25);
+            instance.zoom(1.25);
             instance.render();
         });
 
         $(settings.zoomOut).on('click', function () {
-            instance.zoomBy(0.8);
+            instance.zoom(0.8);
             instance.render();
         });
 
@@ -54,12 +54,7 @@
         instance._$canvas.on('wheel', function(e){
             var dz = e.originalEvent.deltaY
             var zoom = dz ? dz < 0 ? 1.25 : 0.8 : 1;
-            instance.zoomBy(zoom);
-
-            var dx = e.offsetX / zoom;
-            var dy = e.offsetY / zoom;
-            instance.panBy(dx, dy);
-
+            instance.zoom(zoom, e.offsetX, e.offsetY);
             instance.render();
         });
 

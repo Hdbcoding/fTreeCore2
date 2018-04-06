@@ -91,12 +91,13 @@
         resetPan: function () {
             this.panTo(0, 0);
         },
-        zoomBy: function (df) {
-            this._zoomFactor *= df;
-            this._transform();
-        },
-        zoomTo: function (factor) {
-            this._zoomFactor = factor;
+        zoom: function(dz, x, y){
+            x = x || this._width / 2;
+            y = y || this._height / 2;
+
+            this._zoomFactor *= dz;
+            this._offsetX = x * (1 - dz) + this._offsetX*dz;
+            this._offsetY = y * (1 - dz) + this._offsetY*dz;
             this._transform();
         },
         resetZoom: function () {
