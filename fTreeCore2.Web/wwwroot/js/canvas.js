@@ -64,6 +64,15 @@
         getElementsAt: function (x, y) {
             return this._elements.filter(ele => ele.isInBounds(x, y));
         },
+        bringToFront: function(element){
+            var index = this._elements.indexOf(element);
+            var last = this._elements.length - 1;
+            if (index != last){
+                var old = this._elements[last];
+                this._elements[index] = old;
+                this._elements[last] = element;
+            }
+        },
         //ctx transform:
         // a c e
         // b d f
@@ -101,7 +110,8 @@
             this._transform();
         },
         resetZoom: function () {
-            this.zoomTo(1);
+            this._zoomFactor = 1;
+            this._transform();
         },
         reset: function () {
             this.resetZoom();

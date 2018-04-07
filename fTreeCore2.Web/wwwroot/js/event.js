@@ -51,7 +51,7 @@
             instance.render();
         });
 
-        instance._$canvas.on('wheel', function(e){
+        instance._$canvas.on('wheel', function (e) {
             var dz = e.originalEvent.deltaY
             var zoom = dz ? dz < 0 ? 1.25 : 0.8 : 1;
             instance.zoom(zoom, e.offsetX, e.offsetY);
@@ -84,13 +84,14 @@
         instance._$canvas.on('mousemove', function (e) {
             last = current;
             current = { x: e.offsetX, y: e.offsetY };
-            justDragged = true;
             var dx = current.x - last.x;
             var dy = current.y - last.y;
+            justDragged = true;
             if (isActiveDrag && topElementHit) {
                 //just dragged a thing
                 var transform = instance.getScaled(dx, dy);
                 topElementHit.moveBy(transform.x, transform.y);
+                instance.bringToFront(topElementHit);
                 instance.render();
             } else if (isActiveDrag && !topElementHit) {
                 //just panned
@@ -101,7 +102,6 @@
 
         instance._$canvas.on('mouseup', function (e) {
             var end = { x: e.offsetX, y: e.offsetY }
-
             if (!justDragged) {
                 if (topElementHit) {
                     //just clicked a thing
