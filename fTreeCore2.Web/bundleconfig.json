@@ -4,14 +4,9 @@
         "inputFiles":[
             "wwwroot/css/site.css"
         ]
-    },
-    {
-        "outputFileName":"wwwroot/css/lib.min.css",
-        "inputfiles":[
-            "../node_modules/bootstrap/dist/bootstrap.css"
-        ]
-    },
-    {
+    }
+
+    ,{
         "outputFileName": "wwwroot/js/familyTree.min.js",
         "inputFiles": [
             "wwwroot/js/canvas.js",
@@ -21,15 +16,7 @@
         "minify": {
             "enabled": true, 
             "renameLocals": true
-        },
-        "sourceMap": true
-    },
-    {
-        "outputFileName":"wwwroot/js/lib.min.js",
-        "inputfiles":[
-            "../node_modules/jquery/dist/jquery.slim.js",
-            "../node_modules/popper.js/dist/popper.js",
-            "../node_modules/bootstrap/dist/bootstrap.js"
-        ]
+        }
     }
+
 ]
