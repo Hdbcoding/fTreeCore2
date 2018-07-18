@@ -2,3 +2,5 @@ obj
 bin
 /fTreeCore2.Web/wwwroot/lib
 /node_modules
+node_modules
+/fTreeCore2.Web/*.lock
