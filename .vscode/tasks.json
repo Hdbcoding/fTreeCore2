@@ -9,21 +9,58 @@
             "command": "yarn install",
             "options": {
                 "cwd": "${workspaceRoot}/fTreeCore2.Web"
-            }
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "gulpCopyJS",
+            "type": "shell",
+            "command": "gulp copyJs",
+            "options": {
+                "cwd": "${workspaceRoot}/fTreeCore2.Web"
+            },
+            "dependsOn": [
+                "yarn"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "gulpCopyCSS",
+            "type": "shell",
+            "command": "gulp copyCss",
+            "options": {
+                "cwd": "${workspaceRoot}/fTreeCore2.Web"
+            },
+            "dependsOn": [
+                "yarn"
+            ]
+        },
+        {
+            "label": "gulpBundles",
+            "type": "shell",
+            "command": "gulp bundle",
+            "options": {
+                "cwd": "${workspaceRoot}/fTreeCore2.Web"
+            },
+            "dependsOn": [
+                "yarn"
+            ]
         },
         {
             "label": "buildDotNet",
             "command": "dotnet build",
-            "type": "shell",
+            "type": "shell"
         },
         {
             "label": "build",
             "dependsOn": [
                 "yarn",
+                "gulpCopyJS",
+                "gulpCopyCSS",
                 "gulpBundles",
                 "buildDotNet"
             ],
-            "group":{
+            "group": {
                 "kind": "build",
                 "isDefault": true
             },
