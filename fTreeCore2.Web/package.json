@@ -7,6 +7,7 @@
     "popper.js": "^1.14.1"
   },
   "devDependencies": {
-    "gulp":"3.9.1"
+    "gulp":"3.9.1",
+    "gulp-bundle-assets": "2.29.0"
   }
 }

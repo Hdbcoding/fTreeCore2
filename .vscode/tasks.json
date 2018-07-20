@@ -4,19 +4,30 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build",
-            "command": "dotnet build",
+            "label": "yarn",
             "type": "shell",
-            "group": "build",
-            "presentation": {
-                "reveal": "silent"
-            },
-            "problemMatcher": "$msCompile"
+            "command": "yarn install",
+            "options": {
+                "cwd": "${workspaceRoot}/fTreeCore2.Web"
+            }
         },
         {
-            "label": "copyLib",
-            "command": "gulp copyLib",
-            "type": "shell"
+            "label": "buildDotNet",
+            "command": "dotnet build",
+            "type": "shell",
+        },
+        {
+            "label": "build",
+            "dependsOn": [
+                "yarn",
+                "gulpBundles",
+                "buildDotNet"
+            ],
+            "group":{
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": "$msCompile"
         }
     ]
 }

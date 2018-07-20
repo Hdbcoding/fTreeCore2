@@ -1,0 +1,35 @@
+    ,{
+        "outputFileName":"wwwroot/css/lib.min.css",
+        "inputfiles":[
+            "../node_modules/bootstrap/dist/bootstrap.css"
+        ]
+    }
+    ,{
+        "outputFileName":"wwwroot/js/lib.min.js",
+        "inputfiles":[
+            "../node_modules/jquery/dist/jquery.slim.js",
+            "../node_modules/popper.js/dist/popper.js",
+            "../node_modules/bootstrap/dist/bootstrap.js"
+        ]
+    }
+
+
+
+        {
+            "label": "copyJS",
+            "command": "gulp copyLib",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceRoot}/fTreeCore2.Web"
+            },
+            "dependsOn": ["yarn"]
+        },
+        {
+            "label": "copyCSS",
+            "command": "gulp copyCss",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceRoot}/fTreeCore2.Web"
+            },
+            "dependsOn": ["yarn"]
+        },
