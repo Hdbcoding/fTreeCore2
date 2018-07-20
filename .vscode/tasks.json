@@ -36,17 +36,6 @@
             ]
         },
         {
-            "label": "gulpBundles",
-            "type": "shell",
-            "command": "gulp bundle",
-            "options": {
-                "cwd": "${workspaceRoot}/fTreeCore2.Web"
-            },
-            "dependsOn": [
-                "yarn"
-            ]
-        },
-        {
             "label": "buildDotNet",
             "command": "dotnet build",
             "type": "shell"
@@ -57,7 +46,6 @@
                 "yarn",
                 "gulpCopyJS",
                 "gulpCopyCSS",
-                "gulpBundles",
                 "buildDotNet"
             ],
             "group": {
