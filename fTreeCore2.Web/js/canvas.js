@@ -1,3 +1,6 @@
+/**
+ * Base canvas functionality, such as panning, zooming, and rendering a set of contained visual elements
+ */
 (function ($, window, undefined) {
     'use strict';
     var canvasApi = window.canvasApi = window.canvasApi || {};
@@ -6,11 +9,8 @@
         width: 500,
         height: 500
     };
-
     var canvases = [];
 
-    //canvas API prototype
-    // pwease no steppy on _private fields
     var canvasProto = {
         _init: function (container, width, height) {
             this._container = container;
@@ -34,9 +34,6 @@
 
             this._ctx.fillStyle = 'black';
             this._ctx.fillRect(tl.x, tl.y, w0, h0);
-
-            this._ctx.strokeStyle = getRndColor();
-            this._ctx.strokeRect(tl.x, tl.y, w0, h0);
         },
         addElement: function (element) {
             if (!this.containsElement(element)) {
@@ -128,13 +125,7 @@
         }
     };
 
-    function getRndColor() {
-        var r = 255 * Math.random() | 0,
-            g = 255 * Math.random() | 0,
-            b = 255 * Math.random() | 0;
-        return 'rgb(' + r + ',' + g + ',' + b + ')';
-    }
-
+    //creates an instance of the canvas api, or finds a matching instance, and returns it
     canvasApi.init = function (inputSettings) {
         var settings = $.extend(true, {}, defaults, inputSettings);
 

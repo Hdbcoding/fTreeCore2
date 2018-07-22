@@ -1,0 +1,19 @@
+var canvas = canvasApi.init({container: '#canvas-container'});
+var n1 = visualElement.createNode();
+canvas.addElement(n1);
+canvas.render();
+var n2 = visualElement.createNode();
+
+canvas.addElement(n2);
+canvas.render();
+var n3 = visualElement.createNode();
+
+
+canvas.addElement(n3);
+canvas.render();
+var e1 = visualElement.createParentEdge(n1, n2);
+canvas.addElement(e1);
+canvas.render();
+var e2 = visualElement.createChildEdge(e1, n3);
+canvas.addElement(e2);
+canvas.render();

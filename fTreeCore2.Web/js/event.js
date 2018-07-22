@@ -1,3 +1,6 @@
+/**
+ * user interaction events, to interact with the canvas and manipulate the family tree
+ */
 (function ($, window, undefined) {
     'use strict';
     var eventApi = window.eventApi = window.eventApi || {};
