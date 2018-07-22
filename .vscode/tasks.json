@@ -13,21 +13,9 @@
             "problemMatcher": []
         },
         {
-            "label": "gulpCopyJS",
+            "label": "gulp",
             "type": "shell",
-            "command": "gulp copyJs",
-            "options": {
-                "cwd": "${workspaceRoot}/fTreeCore2.Web"
-            },
-            "dependsOn": [
-                "yarn"
-            ],
-            "problemMatcher": []
-        },
-        {
-            "label": "gulpCopyCSS",
-            "type": "shell",
-            "command": "gulp copyCss",
+            "command": "gulp",
             "options": {
                 "cwd": "${workspaceRoot}/fTreeCore2.Web"
             },
@@ -44,8 +32,7 @@
             "label": "build",
             "dependsOn": [
                 "yarn",
-                "gulpCopyJS",
-                "gulpCopyCSS",
+                "gulp",
                 "buildDotNet"
             ],
             "group": {

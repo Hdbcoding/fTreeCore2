@@ -1,56 +1,32 @@
 var gulp = require('gulp');
+var concat = require('gulp-concat');
+var rename = require('gulp-rename');
 
 gulp.task('copyCss', function () {
-    return gulp.src(['./node_modules/bootstrap/dist/css/*.css'])
-        .pipe(gulp.dest('./wwwroot/lib/css'));
+    return gulp.src(['./node_modules/bootstrap/dist/css/bootstrap.min.css'])
+        .pipe(gulp.dest('./wwwroot/css'));
 });
 
 gulp.task('copyJs', function () {
     return gulp.src([
-        './node_modules/jquery/dist/jquery*js',
-        './node_modules/popper.js/dist/popper*js',
-        './node_modules/bootstrap/dist/js/bootstrap*js'
-    ]).pipe(gulp.dest('./wwwroot/lib/js'));
+        './node_modules/jquery/dist/jquery.slim.min.js',
+        './node_modules/popper.js/dist/popper.min.js',
+        './node_modules/bootstrap/dist/js/bootstrap.min.js'])
+        .pipe(gulp.dest('./wwwroot/js'));
 });
 
-//using gulp-bundle-assets
-// gulp.task('bundle', function () {
-//     return gulp.src('bundle.config.js')
-//         .pipe(bundle())
-//         .pipe(gulp.dest('./wwwroot'));
-// });
+gulp.task('bundleJs', function(){
+    return gulp.src([
+        './js/canvas.js',
+        './js/visualElement.js',
+        './js/event.js'])
+        .pipe(concat('familyTree.min.js'))
+        .pipe(gulp.dest('./wwwroot/js'));
+});
 
-// {
-//     "label": "gulpBundles",
-//     "type": "shell",
-//     "command": "gulp bundle",
-//     "options": {
-//         "cwd": "${workspaceRoot}/fTreeCore2.Web"
-//     },
-//     "dependsOn": [
-//         "yarn"
-//     ]
-// },
+gulp.task('bundleCss', function(){
+    return gulp.src(['./css/site.css'])
+        .pipe(gulp.dest('./wwwroot/css'))
+});
 
-//from old bundle.config.js
-// bundle: {
-//     familyTree: {
-//         scripts: [
-//             './wwwroot/js/canvas.js',
-//             './wwwroot/js/visualElement.js',
-//             './wwwroot/js/event.js'
-//         ],
-//         styles: ['./wwwroot/css/site.css']
-//     },
-//     lib: {
-//         scripts: [
-//             './wwwroot/lib/js/jquery.slim.min.js',
-//             './wwwroot/lib/js/popper.min.js',
-//             './wwwroot/lib/js/bootstrap.min.js'
-//         ],
-//         styles: ['./wwwroot/lib/css/bootstrap.min.css'],
-//         options: {
-//           maps: false
-//         }
-//     }
-// }
+gulp.task('default', ['copyCss', 'copyJs', 'bundleJs', 'bundleCss'])
