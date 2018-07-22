@@ -6,7 +6,7 @@
         {
             "label": "yarn",
             "type": "shell",
-            "command": "yarn install",
+            "command": "yarn",
             "options": {
                 "cwd": "${workspaceRoot}/fTreeCore2.Web"
             },
