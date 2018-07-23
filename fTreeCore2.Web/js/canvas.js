@@ -59,7 +59,7 @@
             this._elements.forEach(ele => ele.draw(this._ctx));
         },
         getElementsAt: function (x, y) {
-            return this._elements.filter(ele => ele.isInBounds(x, y));
+            return this._elements.filter(ele => ele.isInBounds(x, y) && $.isFunction(ele.moveBy)); //todo - don't necessarily want this filter...
         },
         bringToFront: function(element){
             var index = this._elements.indexOf(element);
