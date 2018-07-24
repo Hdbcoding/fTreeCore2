@@ -11,19 +11,18 @@
     };
     var canvases = [];
 
-    var canvasProto = {
-        _init: function (container, width, height) {
-            this._container = container;
-            this._width = width;
-            this._height = height;
-            this._$canvas = this._$canvas || $('<canvas>')
-                .attr({ width: width, height: height })
-                .appendTo(container);
-            this._elements = this._elements || [];
-            this._ctx = this.ctx || this._$canvas[0].getContext('2d');
-            this._offsetX = this._offsetY = 0;
-            this._zoomFactor = 1;
-        },
+    function Canvas(container, width, height){
+        this._container = container;
+        this._width = width;
+        this._height = height;
+        this._$canvas = $('<canvas>')
+            .attr({ width: width, height: height })
+            .appendTo(container);
+        this._elements = [];
+        this._offsetX = this._offsetY = 0;
+        this._zoomFactor = 1;
+    }
+    Canvas.prototype = {
         clear: function () {
             //top left corner
             var tl = this.getCoordinates(0,0);
@@ -126,22 +125,21 @@
     };
 
     //creates an instance of the canvas api, or finds a matching instance, and returns it
-    canvasApi.init = function (inputSettings) {
+    canvasApi.createInstance = function (inputSettings) {
         var settings = $.extend(true, {}, defaults, inputSettings);
 
         //only one canvas per container. If we've already added a canvas here return the old one
-        var old = getCanvas(settings.container);
+        var old = getInstance(settings.container);
         if (old) return old;
 
         //create canvas using the ~~prototype~~
-        let instance = Object.create(canvasProto);
-        instance._init(settings.container, settings.width, settings.height);
+        let instance = new Canvas(settings.container, settings.width, settings.height);
         instance.clear();
         canvases.push(instance);
         return instance;
     }
 
-    function getCanvas(container) {
+    var getInstance = canvasApi.getInstance = function(container) {
         for (let i = 0; i < canvases.length; i++) {
             var objInstance = canvases[i];
             if (objInstance._container == container) return objInstance;

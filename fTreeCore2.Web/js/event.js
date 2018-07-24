@@ -3,10 +3,9 @@
  */
 (function ($, window, undefined) {
     'use strict';
-    var eventApi = window.eventApi = window.eventApi || {};
-
-    var settings = {
-        canvasContainer: '#canvas-container',
+    var familyApi = window.familyApi = window.familyApi || {};
+    var defaults = {
+        container: '#canvas-container',
         canvasWidth: 1366,
         canvasHeight: 720,
         clear: '#clear',
@@ -14,15 +13,16 @@
         zoomOut: '#zoom-out',
         zoomReset: '#zoom-reset',
         panReset: '#pan-reset'
-    }
+    };
+    var families = [];
 
-    eventApi.init = function (overrides) {
-        $.extend(true, settings, overrides);
+    familyApi.createInstance = function (overrides) {
+        $.extend(true, {}, defaults, overrides);
 
         var canvasInstance = window.canvasApi.init({
-            container: settings.canvasContainer,
-            height: settings.canvasHeight,
-            width: settings.canvasWidth
+            container: defaults.container,
+            height: defaults.canvasHeight,
+            width: defaults.canvasWidth
         });
         canvasInstance.render();
 
@@ -30,26 +30,26 @@
     }
 
     function initBindings(instance) {
-        $(settings.clear).on('click', function () {
+        $(defaults.clear).on('click', function () {
             instance.removeAllElements();
         });
 
-        $(settings.zoomIn).on('click', function () {
+        $(defaults.zoomIn).on('click', function () {
             instance.zoom(1.25);
             instance.render();
         });
 
-        $(settings.zoomOut).on('click', function () {
+        $(defaults.zoomOut).on('click', function () {
             instance.zoom(0.8);
             instance.render();
         });
 
-        $(settings.zoomReset).on('click', function () {
+        $(defaults.zoomReset).on('click', function () {
             instance.resetZoom();
             instance.render();
         });
 
-        $(settings.panReset).on('click', function () {
+        $(defaults.panReset).on('click', function () {
             instance.resetPan();
             instance.render();
         });
@@ -121,5 +121,9 @@
             elementsHit = [];
             topElementHit = false;
         });
+    }
+
+    var getInstance = familyApi.getInstance = function(container){
+
     }
 })(jQuery, window);
