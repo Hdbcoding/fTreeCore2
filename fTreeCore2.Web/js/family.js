@@ -6,8 +6,8 @@
     var familyApi = window.familyApi = window.familyApi || {};
     var defaults = {
         container: '#canvas-container',
-        canvasWidth: 1366,
-        canvasHeight: 720,
+        width: 1366,
+        height: 720,
         clear: '#clear',
         zoomIn: '#zoom-in',
         zoomOut: '#zoom-out',
@@ -16,49 +16,58 @@
     };
     var families = [];
 
-    familyApi.createInstance = function (overrides) {
-        $.extend(true, {}, defaults, overrides);
-
-        var canvasInstance = window.canvasApi.init({
-            container: defaults.container,
-            height: defaults.canvasHeight,
-            width: defaults.canvasWidth
+    function Family(container, width, height){
+        this._container = container;
+        this._canvas = canvasApi.createInstance({
+            container: container, width: width, height: height
         });
-        canvasInstance.render();
+        this._people = [];
+        this._relationships = [];
 
-        initBindings(canvasInstance);
+        initBindings(this);
     }
 
-    function initBindings(instance) {
+    familyApi.createInstance = function (overrides) {
+        var settings = $.extend(true, {}, defaults, overrides);
+
+        //only one family per container
+        var old = getInstance(settings.container);
+        if (old) return old;
+
+        let instance = new Family(settings.container, settings.width, settings.height);
+        return instance;
+    }
+
+    function initBindings(family) {
         $(defaults.clear).on('click', function () {
-            instance.removeAllElements();
+            family._canvas.removeAllElements();
         });
 
         $(defaults.zoomIn).on('click', function () {
-            instance.zoom(1.25);
-            instance.render();
+            family._canvas.zoom(1.25);
+            family._canvas.render();
         });
 
         $(defaults.zoomOut).on('click', function () {
-            instance.zoom(0.8);
-            instance.render();
+            family._canvas.zoom(0.8);
+            family._canvas.render();
         });
 
         $(defaults.zoomReset).on('click', function () {
-            instance.resetZoom();
-            instance.render();
+            family._canvas.resetZoom();
+            family._canvas.render();
         });
 
         $(defaults.panReset).on('click', function () {
-            instance.resetPan();
-            instance.render();
+            family._canvas.resetPan();
+            family._canvas.render();
         });
 
-        instance._$canvas.on('wheel', function (e) {
+        family._canvas._$canvas.on('wheel', function (e) {
             var dz = e.originalEvent.deltaY
             var zoom = dz ? dz < 0 ? 1.25 : 0.8 : 1;
-            instance.zoom(zoom, e.offsetX, e.offsetY);
-            instance.render();
+            family._canvas.zoom(zoom, e.offsetX, e.offsetY);
+            family._canvas.render();
         });
 
 
@@ -72,19 +81,19 @@
         var topElementHit = false;
         var coords = { x: 0, y: 0 };
 
-        instance._$canvas.on('mousedown', function (e) {
+        family._canvas._$canvas.on('mousedown', function (e) {
             last = current = start = { x: e.offsetX, y: e.offsetY };
             isActiveDrag = true;
             justDragged = false;
 
-            coords = instance.getCoordinates(start.x, start.y);
-            elementsHit = instance.getElementsAt(coords.x, coords.y);
+            coords = family._canvas.getCoordinates(start.x, start.y);
+            elementsHit = family._canvas.getElementsAt(coords.x, coords.y);
             if (elementsHit.length) {
                 topElementHit = elementsHit[0];
             }
         });
 
-        instance._$canvas.on('mousemove', function (e) {
+        family._canvas._$canvas.on('mousemove', function (e) {
             last = current;
             current = { x: e.offsetX, y: e.offsetY };
             var dx = current.x - last.x;
@@ -92,18 +101,18 @@
             justDragged = true;
             if (isActiveDrag && topElementHit) {
                 //just dragged a thing
-                var transform = instance.getScaled(dx, dy);
+                var transform = family._canvas.getScaled(dx, dy);
                 topElementHit.moveBy(transform.x, transform.y);
-                instance.bringToFront(topElementHit);
-                instance.render();
+                family._canvas.bringToFront(topElementHit);
+                family._canvas.render();
             } else if (isActiveDrag && !topElementHit) {
                 //just panned
-                instance.panBy(dx, dy);
-                instance.render();
+                family._canvas.panBy(dx, dy);
+                family._canvas.render();
             }
         });
 
-        instance._$canvas.on('mouseup', function (e) {
+        family._canvas._$canvas.on('mouseup', function (e) {
             var end = { x: e.offsetX, y: e.offsetY }
             if (!justDragged) {
                 if (topElementHit) {
@@ -111,9 +120,9 @@
                     console.log(elementsHit);
                 } else {
                     //just clicked empty space
-                    var ele = window.visualElement.createNode(coords.x, coords.y);
-                    instance.addElement(ele);
-                    instance.render();
+                    var ele = visualElement.createNode(coords.x, coords.y);
+                    family._canvas.addElement(ele);
+                    family._canvas.render();
                 }
             }
 
@@ -124,6 +133,10 @@
     }
 
     var getInstance = familyApi.getInstance = function(container){
-
+        for (let i = 0; i < families.length; i++) {
+            var objInstance = families[i];
+            if (objInstance._container == container) return objInstance;
+        }
+        return false;
     }
 })(jQuery, window);

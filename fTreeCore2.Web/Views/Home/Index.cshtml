@@ -13,8 +13,9 @@
 @section scripts{
 <script src="~/js/familyTree.min.js"></script>
 <script>
+    var family = {};
     $(function(){
-        window.eventApi.init();
+        family = familyApi.createInstance();
     });
 </script>
 }

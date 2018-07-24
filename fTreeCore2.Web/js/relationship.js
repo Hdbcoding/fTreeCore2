@@ -1,13 +1,13 @@
 /**
- * A family node contains two parent persons, and a collection of child persons
- * A family node is represented by an edge between the parent nodes,
+ * A relationship contains two parent persons, and a collection of child persons
+ * A relationship is represented by an edge between the parent nodes,
  *  and a collection of edges between the parent-edge and all children edges
  */
 (function ($, window, undefined) {
     'use strict';
     var familyNode = window.familyNode = window.familyNode || {};
 
-    function FamilyNode(dad, mom, kids) {
+    function Relationship(dad, mom, kids) {
         this._dad = dad;
         this._mom = mom;
         this._kids = kids;
@@ -16,7 +16,7 @@
         this._createKidEdges();
     }
 
-    FamilyNode.prototype = {
+    Relationship.prototype = {
         _createParentEdge: function () {
             this._parentEdge = window.visualElement.createParentEdge(this._dad.getNode(), this._mom.getNode());
         },

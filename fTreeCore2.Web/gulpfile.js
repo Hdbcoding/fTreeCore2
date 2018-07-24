@@ -19,8 +19,8 @@ gulp.task('bundleJs', function(){
         './js/canvas.js',
         './js/visualElement.js',
         './js/person.js',
-        './js/familyNode.js',
-        './js/event.js'])
+        './js/relationship.js',
+        './js/family.js'])
         .pipe(concat('familyTree.min.js'))
         .pipe(gulp.dest('./wwwroot/js'));
 });

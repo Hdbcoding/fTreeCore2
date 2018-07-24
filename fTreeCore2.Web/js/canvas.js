@@ -18,6 +18,7 @@
         this._$canvas = $('<canvas>')
             .attr({ width: width, height: height })
             .appendTo(container);
+        this._ctx = this._$canvas[0].getContext('2d');
         this._elements = [];
         this._offsetX = this._offsetY = 0;
         this._zoomFactor = 1;
