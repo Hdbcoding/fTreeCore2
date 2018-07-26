@@ -18,15 +18,15 @@
 
     Relationship.prototype = {
         _createParentEdge: function () {
-            this._parentEdge = window.visualElement.createParentEdge(this._dad.getNode(), this._mom.getNode());
+            this._parentEdge = visualElement.createParentEdge(this._dad.getNode(), this._mom.getNode());
         },
-        _createKidEdges: function (parentEdge, kids){
+        _createKidEdges: function (){
             var edges = [];
             this._kids.forEach((kid) => {
-                edges.push(window.visualElement.createChildEdge(this._parentEdge, kid.getNode()));
+                edges.push(visualElement.createChildEdge(this._parentEdge, kid.getNode()));
             });
             this._kidEdges = edges;
-        }
+        },
     }
 
 })(jQuery, window);

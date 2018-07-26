@@ -56,6 +56,10 @@
         };
     }
 
+    visualElement.isNode = function (n) {
+        return Node.prototype.isPrototypeOf(n);
+    }
+
     visualElement.createNode = function (x = 0, y = 0, w = 50, h = 50, fill = 'white', stroke = 'red') {
         return new Node(x, y, w, h, fill, stroke);
     }
@@ -92,6 +96,13 @@
     }
     edgeProto.updateEndpoints = function () {
         throw 'abstract base method - implement updateEndpoints!';
+    }
+    edgeProto.isAttachedToNode = function(n) {
+        throw 'abstract base method - implement isAttachedToNode!';
+    }
+
+    visualElement.isEdge = function(e){
+        return edgeProto.isPrototypeOf(e);
     }
 
     //parentEdge: A line connecting two nodes
@@ -132,6 +143,9 @@
         this._oldN1 = newN1;
         this._oldN2 = newN2;
         return changed;
+    }
+    ParentEdge.prototype.isAttachedToNode = function(n){
+        return n == this._n1 || n == this._n2;
     }
 
     visualElement.createParentEdge = function (node1, node2, stroke = 'green') {
@@ -174,6 +188,16 @@
         this._oldE = newE;
 
         return changed;
+    }
+    ChildEdge.prototype.isAttachedToNode = function(n){
+        return this._n == n;
+    }
+    ChildEdge.prototype.isAttachedToEdge = function(e){
+        return this._e == e;
+    }
+
+    visualElement.isChildEdge = function(e){
+        return ChildEdge.prototype.isPrototypeOf(e);
     }
 
     visualElement.createChildEdge = function (edge, node, stroke = 'red') {

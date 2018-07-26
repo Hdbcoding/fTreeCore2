@@ -78,7 +78,7 @@
         var current = { x: 0, y: 0 };
         var end = { x: 0, y: 0 };
         var elementsHit = [];
-        var topElementHit = false;
+        var topNodeHit = false;
         var coords = { x: 0, y: 0 };
 
         family._canvas._$canvas.on('mousedown', function (e) {
@@ -88,8 +88,8 @@
 
             coords = family._canvas.getCoordinates(start.x, start.y);
             elementsHit = family._canvas.getElementsAt(coords.x, coords.y);
-            if (elementsHit.length) {
-                topElementHit = elementsHit[0];
+            if (elementsHit.nodes.length){
+                topNodeHit = elementsHit.nodes[0];
             }
         });
 
@@ -99,13 +99,13 @@
             var dx = current.x - last.x;
             var dy = current.y - last.y;
             justDragged = true;
-            if (isActiveDrag && topElementHit) {
+            if (isActiveDrag && topNodeHit) {
                 //just dragged a thing
                 var transform = family._canvas.getScaled(dx, dy);
-                topElementHit.moveBy(transform.x, transform.y);
-                family._canvas.bringToFront(topElementHit);
+                topNodeHit.moveBy(transform.x, transform.y);
+                family._canvas.bringToFront(topNodeHit);
                 family._canvas.render();
-            } else if (isActiveDrag && !topElementHit) {
+            } else if (isActiveDrag && !topNodeHit) {
                 //just panned
                 family._canvas.panBy(dx, dy);
                 family._canvas.render();
@@ -115,20 +115,20 @@
         family._canvas._$canvas.on('mouseup', function (e) {
             var end = { x: e.offsetX, y: e.offsetY }
             if (!justDragged) {
-                if (topElementHit) {
+                if (topNodeHit) {
                     //just clicked a thing
                     console.log(elementsHit);
                 } else {
                     //just clicked empty space
-                    var ele = visualElement.createNode(coords.x, coords.y);
-                    family._canvas.addElement(ele);
+                    var n = visualElement.createNode(coords.x, coords.y);
+                    family._canvas.addNode(n);
                     family._canvas.render();
                 }
             }
 
             isActiveDrag = false;
             elementsHit = [];
-            topElementHit = false;
+            topNodeHit = false;
         });
     }
 
